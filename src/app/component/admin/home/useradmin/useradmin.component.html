@@ -1,0 +1,115 @@
+<div class="row" style="margin-bottom: 300px">
+  <div class="col-12 col-md-12">
+    <h1>Quản lý User</h1>
+  </div>
+  <div class="col-4 col-md-4">
+    <button
+      style="margin-left: 10px;
+      height: 41px;
+      margin-bottom: 20px;
+      width: 255px;"
+      (click)="addUser()"
+    >
+      Thêm User
+    </button>
+  </div>
+  <div class="col-4 col-md-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="product-view-top">
+          <form>
+            <div class="row">
+              <div class="col-md-5">
+                <select
+                  style="width: 250px; height: 38px"
+                  [(ngModel)]="codeValue"
+                  name="category"
+                >
+                  <option *ngFor="let item of code" [value]="item.value">
+                    {{ item.viewValue }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <input
+          style="width: 110px; height: 37px; margin-left:65px"
+          type="button"
+          value="Tìm Kiếm"
+          (click)="timkiem()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-4 col-md-4">
+    <div class="search">
+      <input
+        style="height: 40px; width: 250px"
+        type="text"
+        placeholder="Search"
+        name="name"
+        [(ngModel)]="seachFrom.name"
+      />
+      <button
+        class="fa fa-search"
+        style="height: 40px; width: 40px"
+        (click)="seachByname()"
+      ></button>
+    </div>
+  </div>
+  <div class="col-12 col-md-12">
+    <table id="customers" style="border-collapse: collapse">
+      <tr>
+        <th>EDIT</th>
+        <th>Id</th>
+        <th>UserName</th>
+        <th>Chức vụ</th>
+        <th>Ngày sinh</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Địa chỉ</th>
+        <th>isAdmin</th>
+        <th>Tên đăng nhập</th>
+      </tr>
+      <tr
+        *ngFor="
+          let user of sharedDataService.user
+            | paginate: { itemsPerPage: 8, currentPage: p }
+        "
+      >
+        <td>
+          <mat-icon
+            style="cursor: pointer"
+            title="Nhấn vào để soạn"
+            (click)="deleteUser(user.id)"
+          >
+            clear
+          </mat-icon>
+          &nbsp;
+          <mat-icon
+            style="cursor: pointer"
+            title="Nhấn vào để soạn"
+            (click)="editUser(user.id)"
+          >
+            create
+          </mat-icon>
+        </td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.codeString }}</td>
+        <td>{{ user.dob | date: "yyyy-MM-dd" }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.address }}</td>
+        <td>{{ user.isAdminAccount }}</td>
+        <td>{{ user.username }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-12" style="padding-top: 20px">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
